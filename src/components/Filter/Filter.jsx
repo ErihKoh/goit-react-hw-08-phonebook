@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFilter } from '../../redux';
-import { getFilter } from '../../redux';
+import { changeFilter } from '../../redux/phoneBook';
+import { getFilter } from '../../redux/phoneBook';
 import s from './Filter.module.css';
 
 export default function Filter() {

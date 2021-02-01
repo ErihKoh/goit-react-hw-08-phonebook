@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'http://localhost:4040';
+// axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContact',
@@ -19,8 +19,8 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/contacts', { data });
-      return response.data;
+      const response = await axios.post('/contacts', data);
+      return response;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -29,10 +29,10 @@ export const addContact = createAsyncThunk(
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
-  async (id, { rejectWithValue }) => {
+  async (contactId, { rejectWithValue }) => {
     try {
-      await axios.delete(`contacts/${id}`);
-      return id;
+      await axios.delete(`contacts/${contactId}`);
+      return contactId;
     } catch (error) {
       return rejectWithValue(error);
     }

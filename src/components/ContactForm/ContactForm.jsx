@@ -5,8 +5,8 @@ import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/PNotify.css';
 import { error, notice } from '@pnotify/core';
 import { defaults } from '@pnotify/core';
-import { addContact } from '../../redux';
-import { getContacts } from '../../redux';
+import { addContact } from '../../redux/phoneBook';
+import { getContacts } from '../../redux/phoneBook';
 import s from './ContactForm.module.css';
 
 defaults.delay = 3000;
@@ -37,7 +37,6 @@ export default function ContactForm() {
     }
 
     const findContact = contacts?.find(contact => contact.data.name === name);
-    console.log(contacts);
 
     if (!findContact) {
       dispatch(addContact({ name, number }));

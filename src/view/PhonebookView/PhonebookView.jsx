@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { fetchContacts } from '../../redux';
+import { fetchContacts } from '../../redux/phoneBook';
 import { useEffect } from 'react';
-import Section from '../Section';
-import ContactForm from '../ContactForm';
-import ContactList from '../ContactList';
-import Filter from '../Filter';
+import Section from '../../components/Section';
+import ContactForm from '../../components/ContactForm';
+import ContactList from '../../components/ContactList';
+import Filter from '../../components/Filter';
 import s from './PhonebookView.module.css';
 
 export default function PhonebookView() {

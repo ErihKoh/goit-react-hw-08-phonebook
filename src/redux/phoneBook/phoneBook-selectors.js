@@ -8,6 +8,6 @@ export const getVisibleContacts = createSelector(
   (items, filter) => {
     const normalizedFilter = filter.toLowerCase();
 
-    return items.filter(item => item.data.name.includes(normalizedFilter));
+    return items.filter(item => item.name.includes(normalizedFilter));
   },
 );
