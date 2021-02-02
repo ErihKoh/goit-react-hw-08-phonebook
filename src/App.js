@@ -1,32 +1,54 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { useEffect, Suspense, lazy } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Switch } from 'react-router-dom';
 import AppBar from './components/AppBar';
-import PhonebookView from './view/PhonebookView';
-import HomeView from './view/HomeView';
-import RegisterView from './view/RegisterView';
-import LoginView from './view/LoginView';
 import Section from './components/Section';
-import { authOperations } from './redux/auth';
+import { authOperations, authSelectors } from './redux/auth';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 import './App.css';
+
+const HomeView = lazy(() => import('./view/HomeView'));
+const RegisterView = lazy(() => import('./view/RegisterView'));
+const LoginView = lazy(() => import('./view/LoginView'));
+const PhonebookView = lazy(() => import('./view/PhonebookView'));
 
 export default function App() {
   const dispatch = useDispatch();
+
+  const isFetchingCurrentUser = useSelector(
+    authSelectors.getIsFetchingCurrentUser,
+  );
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
   }, [dispatch]);
 
-  return (
+  return isFetchingCurrentUser ? (
+    <h1> Показываем React Skeleton</h1>
+  ) : (
     <Section>
       <AppBar />
 
-      <Switch>
-        <Route exact path="/" component={HomeView} />
-        <Route path="/register" component={RegisterView} />
-        <Route path="/login" component={LoginView} />
-        <Route path="/contacts" component={PhonebookView} />
-      </Switch>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Switch>
+          <PublicRoute exact path="/">
+            <HomeView />
+          </PublicRoute>
+
+          <PublicRoute path="/register" restricted>
+            <RegisterView />
+          </PublicRoute>
+
+          <PublicRoute path="/login" restricted>
+            <LoginView />
+          </PublicRoute>
+
+          <PrivateRoute path="/contacts">
+            <PhonebookView />
+          </PrivateRoute>
+        </Switch>
+      </Suspense>
     </Section>
   );
 }
