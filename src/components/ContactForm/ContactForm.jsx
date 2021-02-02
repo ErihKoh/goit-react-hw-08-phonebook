@@ -36,7 +36,7 @@ export default function ContactForm() {
       });
     }
 
-    const findContact = contacts?.find(contact => contact.data.name === name);
+    const findContact = contacts?.find(contact => contact.name === name);
 
     if (!findContact) {
       dispatch(addContact({ name, number }));
@@ -44,7 +44,7 @@ export default function ContactForm() {
       return;
     }
 
-    if (findContact?.data.name === name) {
+    if (findContact?.name === name) {
       reset();
       return notice({
         title: 'Notice',
