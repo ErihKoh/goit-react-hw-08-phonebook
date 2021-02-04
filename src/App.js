@@ -25,7 +25,7 @@ export default function App() {
   }, [dispatch]);
 
   return isFetchingCurrentUser ? (
-    <h1> Показываем React Skeleton</h1>
+    <h1> Loading...</h1>
   ) : (
     <Section>
       <AppBar />
